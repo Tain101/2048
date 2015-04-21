@@ -2,9 +2,9 @@
 //Map.js
 
 /**	Map Object
-*	2d array of Animal, food, ect..
-*	
-**/	
+*	Not used - see Board.js
+*
+**/
 Board = function(boardSize){//larger, contains 'map info'
 	console.log('9');
 
@@ -55,14 +55,14 @@ Board = function(boardSize){//larger, contains 'map info'
 		for(var i = 0; i < this.size.height+1; i++){
 			context.strokeStyle = '#000';
 		    context.beginPath();
-		    context.moveTo(0, i*bodySize); 
+		    context.moveTo(0, i*bodySize);
 		    context.lineTo(canvas.width, i*bodySize);
 		    context.lineWidth = 1;
 		    context.stroke();
-		    context.closePath();  
+		    context.closePath();
 
-			/*context.drawLine(new Pen(Brushes.black, 1), 
-				new Point(0, i*blockHeight), 
+			/*context.drawLine(new Pen(Brushes.black, 1),
+				new Point(0, i*blockHeight),
 				new Point(this.size.width, i*blockHeight)
 			);*/
 		}
@@ -70,14 +70,14 @@ Board = function(boardSize){//larger, contains 'map info'
 		for(var i = 0; i < this.size.width+1; i++){
 			context.strokeStyle = '#000';
 		    context.beginPath();
-		    context.moveTo(i*bodySize, 0); 
+		    context.moveTo(i*bodySize, 0);
 		    context.lineTo(i*bodySize, canvas.height);
 		    context.lineWidth = 1;
 		    context.stroke();
 		    context.closePath();
 
-			/*context.drawLine(new Pen(Brushes.black, 1), 
-				new Point(i*blockWidth, 0), 
+			/*context.drawLine(new Pen(Brushes.black, 1),
+				new Point(i*blockWidth, 0),
 				new Point(i*blockWidth, this.size.height)
 			);*/
 		}

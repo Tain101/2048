@@ -2,7 +2,8 @@
 // GameLoopManager
 // By Javier Arevalo
 
-//this stuff is pretty confusing as well.
+//this should be handled in Game.js - shouldn't be this complicated
+//                                      for the scope of this project
 
 
 var GameLoopManager = function() {
