@@ -1,0 +1,9 @@
+Goal: create a genetic algorthim to teach AI to play 2048
+
+Approach: create the game as an indepenednt project, then use the AI to call methods and the game will return a score.
+    The AI will adjust based on the score returned.
+
+Layout:
+    Game - Conntains the board, and handles the menu & init sytstems.
+        Board - Contains the array of pieces and handles the sliding action.
+            Piece - Contains it's location and value
