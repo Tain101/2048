@@ -16,7 +16,7 @@ board                 = null;
 bindThis              = this;
 
 // static variables
-var defaultRestart = false; //Do we restart automatically when the game ends?
+var defaultRestart = true; //Do we restart automatically when the game ends?
 var gameSpeed      = 5; //frames per sec.
 var mapWidth       = 4; //number of squares, not pixels
 var mapHeight      = 4;
