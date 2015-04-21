@@ -10,6 +10,10 @@ var Board = function (size) {
     this.size = size;
     var pieces = [[]];
 
+    /**
+     * generates the grid lines separating the boxes
+     */
+    var displayGrid = function(){};
     var slideUp = function(){};
     var slideRight = function(){};
     var slideDown = function(){};
