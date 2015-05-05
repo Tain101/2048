@@ -33,6 +33,7 @@ var boardSize  = {
 var score   = -1;
 var date    = new Date();
 var oldTime = date.getTime();
+var newTime = date.getTime();
 
 this.upKey    = {isPressed: false};
 this.downKey  = {isPressed: false};
@@ -61,12 +62,13 @@ window.onload = function() {
     }
 };
 
-var newGame = function() {
+this.newGame = function() {
     board = new Board(boardSize);
+    board.displayGrid();
     score = 0;
 };
 
-var start = function() {
+this.start = function() {
     hasEnded = false;
 
     bindThis = this;
@@ -75,16 +77,16 @@ var start = function() {
     });
 };
 
-var update = function() {
+this.update = function() {
     currentTime = date.getTime();
     checkInputs(currentTime - oldTime);
-    update(currentTime - oldTime);
-    draw();
+    // update(currentTime - oldTime);
+    this.draw();
     oldTime = newTime;
     requestAnimationFrame(update);
 };
 
-var checkInputs = function(timePassed){
+this.checkInputs = function(timePassed){
     if (this.leftKey.isPressed) {
         this.leftKey.wasPressed = true;
     } else if (this.leftKey.wasPressed && !this.leftKey.isPressed) {
@@ -107,7 +109,7 @@ var checkInputs = function(timePassed){
     }
 };
 
-var onKeyEvent = function(keyEvent) {
+this.onKeyEvent = function(keyEvent) {
     var keyID = keyEvent.keyCode;
     var key;
 
@@ -145,6 +147,10 @@ var onKeyEvent = function(keyEvent) {
     } else if (keyEvent.type == "keyup") {
         key.isPressed = false;
     }
+};
+
+this.draw = function (argument) {
+    // body..
 };
 
 start();

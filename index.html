@@ -1,34 +1,64 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Life</title>
-  <script src='js/GameLoopManager.js'></script>
-  <script src='js/Map.js'></script>
-  <script src='js/Board.js'></script>
-  <script src='js/Game.js'></script>
-  <script src='js/Bot.js'></script>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>2048</title>
+        <script src="../../phaser/build/phaser.min.js"></script>
+        <script src="js/Board.js"></script>
+        <script src="js/Piece.js"></script>
 
-  <style>
-
-
-    #screen { display:block; margin:0 auto; background-color:#000; }
-
-    .fpsmeter {
-        padding: 0;
+        <style>
+        body {
         margin: 0;
-        width: 100%;
-        text-align: center;
-    }
-    .fpsmeter p {
-        margin-top: 0px;
-        margin-bottom: 0px;
-    }
+        }
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var canvasSize = 500;
+            var margin = canvasSize/160*3;
+            var boardSize = {width: 4, height: 4};
+            var pieceSize = canvasSize / 4 * 0.95;
 
-  </style>
-</head>
-<body>
-  <canvas id='screen' width='500' height='500'></canvas>
-  <div id="fpscontainer"></div>
-</body>
+            var game = new Phaser.Game(canvasSize, canvasSize, Phaser.AUTO, '', {
+                preload: preload,
+                create: create,
+                update: update
+            });
+            var cursors;
+
+            var board = new Board();
+
+            function preload() {
+                board.init();
+                cursors = game.input.keyboard.createCursorKeys();
+            }
+
+            function create() {
+                //generate 2 pieces in random points
+                board.start();
+                //enable keybinds
+
+            }
+
+            function update() {
+
+                if (cursors.up.isDown){
+                    board.slideUp();
+                }else if(cursors.down.isDown){
+                    board.slideDown();
+                }else if(cursors.left.isDown){
+                    board.slideLeft();
+                }else if(cursors.right.isDown){
+                    board.slideRight();
+                }else{
+
+                }
+
+                //shift acordingly
+                //if shifted, add a new piece
+                board.displayGrid();
+            }
+         </script>
+    </body>
 </html>
