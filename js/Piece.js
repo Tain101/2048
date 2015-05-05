@@ -9,7 +9,11 @@ var Piece = function() {
     this.setValue = function(value) {
         this.value = value;
         this.color = 0x888888;
-        switch (value % 6) {
+        var switchValue = Math.log2(value);
+        if (switchValue < 0) switchValue = 0;
+        switchValue = Math.floor(switchValue);
+        switchValue = switchValue % 6;
+        switch (switchValue) {
             case 0: //000
                 this.color = 0x888888;
                 break;

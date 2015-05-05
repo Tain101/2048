@@ -26,6 +26,7 @@
                 update: update
             });
             var cursors;
+            var allowKeys = true;
 
             var board = new Board();
 
@@ -42,17 +43,38 @@
             }
 
             function update() {
+                var hasSlid = false;
 
-                if (cursors.up.isDown){
-                    board.slideUp();
-                }else if(cursors.down.isDown){
-                    board.slideDown();
-                }else if(cursors.left.isDown){
-                    board.slideLeft();
-                }else if(cursors.right.isDown){
-                    board.slideRight();
-                }else{
+                if (allowKeys){
+                    if (cursors.up.isDown){
+                        hasSlid = board.slideUp();
+                        allowKeys = false;
+                    }else if(cursors.down.isDown){
+                        hasSlid =board.slideDown();
+                        allowKeys = false;
+                    }else if(cursors.left.isDown){
+                        hasSlid = board.slideLeft();
+                        allowKeys = false;
+                    }else if(cursors.right.isDown){
+                        hasSlid = board.slideRight();
+                        allowKeys = false;
+                    }
+                } else{
+                    if (cursors.up.isDown){
+                        allowKeys = false;
+                    }else if(cursors.down.isDown){
+                        allowKeys = false;
+                    }else if(cursors.left.isDown){
+                        allowKeys = false;
+                    }else if(cursors.right.isDown){
+                        allowKeys = false;
+                    }else{
+                        allowKeys = true;
+                    }
+                }
 
+                if(hasSlid){
+                    board.addRandomPiece();
                 }
 
                 //shift acordingly
