@@ -24,7 +24,7 @@ Board = function(boardSize){//larger, contains 'map info'
 				this.currentMap[i][j].update();
 			}
 		}
-	}
+	};
 
 	this.add = function(block){
 		console.log(block.type);
@@ -33,7 +33,7 @@ Board = function(boardSize){//larger, contains 'map info'
 		var y = block.location.y;
 
 		this.currentMap[x][y] = block;
-	}
+	};
 
 	this.getEmpty = function(){
 		var x = Math.floor(Math.random()*this.size.width);

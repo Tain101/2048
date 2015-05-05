@@ -68,6 +68,13 @@ var Board = function() {
             (margin + pieceSize * piece.getX()), (margin + pieceSize * piece.getY()), (pieceSize), (pieceSize)
         );
         graphics.endFill();
+        text = game.add.text(
+            pieceSize * piece.getX() + pieceSize / 2,
+            pieceSize * piece.getY() + pieceSize / 2,
+            piece.getX() /*piece.value*/
+        );
+        text.fill = "#ffffff";
+        text.align = 'center';
     };
 
     this.addRandomPiece = function() {
@@ -114,110 +121,5 @@ var Board = function() {
         }
 
         return emptyList[randomIndex];
-    };
-
-    this.slideUp = function() {
-        var hasSlid = false;
-        console.log("slideUp");
-        //start from bottom, move up.
-        //this lets us move up as much as possible.
-        //get list of empty squares
-        for (var i = boardSize.height - 1; i >= 1; i--) {
-            //we dont check the top row for moving up
-            for (var j = boardSize.width - 1; j >= 0; j--) {
-                if (this.pieces[j][i].value === 0) {
-                    continue;
-                }
-                var piece = this.pieces[j][i];
-                var x = piece.getX();
-                var y = piece.getY();
-                if (this.pieces[x][y - 1].value === 0) { /*piece above is empty*/
-                    /*move piece up*/
-                    this.pieces[x][y - 1].setValue(piece.value);
-                    piece.setValue(0);
-                    hasSlid = true;
-                } else if (this.pieces[x][y - 1].value == piece.value) { /*piece above.value == this.value*/
-                    /*combine*/
-                    this.pieces[x][y - 1].setValue(piece.value * 2);
-                    piece.setValue(0);
-                    hasSlid = true;
-                }
-            }
-        }
-        return hasSlid;
-    };
-    this.slideDown = function() {
-        var hasSlid = false;
-        for (var i = 0; i < boardSize.height - 1; i++) {
-            //we dont check the bottom row for moving down
-            for (var j = 0; j < boardSize.width; j++) {
-                if (this.pieces[j][i].value === 0) {
-                    continue;
-                }
-                var piece = this.pieces[j][i];
-                var x = piece.getX();
-                var y = piece.getY();
-                if (this.pieces[x][y + 1].value === 0) { /*piece below is empty*/
-                    /*move piece down*/
-                    this.pieces[x][y + 1].setValue(piece.value);
-                    piece.setValue(0);
-                    hasSlid = true;
-                } else if (this.pieces[x][y + 1].value == piece.value) { /*piece below.value == this.value*/
-                    /*combine*/
-                    this.pieces[x][y + 1].setValue(piece.value * 2);
-                    piece.setValue(0);
-                    hasSlid = true;
-                }
-            }
-        }
-        return hasSlid;
-    };
-
-    this.slideLeft = function() {
-        var hasSlid = false;
-        for (var j = boardSize.width - 1; j >= 1; j--) {
-            for (var i = boardSize.height - 1; i >= 0; i--) {
-                if (this.pieces[j][i].value === 0) {
-                    continue;
-                }
-                var piece = this.pieces[j][i];
-                var x = piece.getX();
-                var y = piece.getY();
-                if (this.pieces[x - 1][y].value === 0) {
-                    this.pieces[x - 1][y].setValue(piece.value);
-                    piece.setValue(0);
-                    hasSlid = true;
-                } else if (this.pieces[x - 1][y].value == piece.value) {
-                    this.pieces[x - 1][y].setValue(piece.value * 2);
-                    piece.setValue(0);
-                    hasSlid = true;
-                }
-            }
-        }
-        return hasSlid;
-    };
-
-    this.slideRight = function() {
-        var hasSlid = false;
-        for (var j = 0; j < boardSize.width - 1; j++) {
-            for (var i = 0; i < boardSize.height; i++) {
-                if (this.pieces[j][i].value === 0) {
-                    continue;
-                }
-                var piece = this.pieces[j][i];
-                var x = piece.getX();
-                var y = piece.getY();
-                if (this.pieces[x + 1][y].value === 0) {
-                    this.pieces[x + 1][y].setValue(piece.value);
-                    piece.setValue(0);
-                    hasSlid = true;
-                } else if (this.pieces[x + 1][y].value == piece.value) {
-                    this.pieces[x + 1][y].setValue(piece.value * 2);
-                    piece.setValue(0);
-                    hasSlid = true;
-                }
-            }
-        }
-        return hasSlid;
     };
 };
