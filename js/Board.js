@@ -33,8 +33,9 @@ var Board = function() {
      * generates the grid lines separating the boxes
      */
     this.displayGrid = function() {
-        for (var i = 0; i < boardSize.height; i++) {
-            for (var j = 0; j < boardSize.width; j++) {
+        var i, j;
+        for (i = 0; i < boardSize.height; i++) {
+            for (j = 0; j < boardSize.width; j++) {
                 this.draw(this.pieces[j][i]);
             }
         }
@@ -43,8 +44,8 @@ var Board = function() {
         // draw a rectangle
         graphics.lineStyle(5, 0x000000, 1);
         graphics.beginFill(0x888888, 1);
-        for (var i = 0; i < 4; i++) {
-            for (var j = 0; j < 4; j++) {
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4; j++) {
                 // graphics.drawRect(
                 //     (margin + pieceSize * j), (margin + pieceSize * i), (pieceSize), (pieceSize)
                 // );
