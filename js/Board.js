@@ -71,7 +71,7 @@ var Board = function() {
         text = game.add.text(
             pieceSize * piece.getX() + pieceSize / 2,
             pieceSize * piece.getY() + pieceSize / 2,
-            piece.getX() /*piece.value*/
+            piece.value
         );
         text.fill = "#ffffff";
         text.align = 'center';

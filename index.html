@@ -16,9 +16,7 @@
     </head>
     <body>
         <script type="text/javascript">
-            var oldTime = 0;
-            var newTime = 0;
-            var d = new Date();
+            var score = 0;
 
             var canvasSize = 500;
             var margin = canvasSize / 160 * 3;
@@ -52,10 +50,6 @@
             }
 
             function update() {
-                var oldTime = newTime;
-                newTime = d.getTime();
-                var tpf = newTime - oldTime;
-                var fps = 1/tpf;
                 var hasSlid = false;
 
                 //slide acordingly
@@ -90,8 +84,11 @@
                 //if shifted, add a new piece
                 if (hasSlid) {
                     board.addRandomPiece();
+                } else {
+                    //gameOver
                 }
 
+                // console.log(score);
                 slideManager.resetMerges();
                 board.displayGrid();
             }

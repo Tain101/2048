@@ -17,6 +17,7 @@ var SlideManager = function(board) {
      * if a piece is found, move up as far as possible
      * if merge, the new piece = sum of two pieces (*2)
      *              and set piece.wasMerged = true;
+     score += curPiece.value;
      *                      which will need to be reset later.
      *
      * @return {[type]} [description]
@@ -24,42 +25,63 @@ var SlideManager = function(board) {
 
     this.slideUp = function() {
         var y = 0;
+        var hasSlid = false;
         while (y <= boardSize.height - 1) {
             for (var x = boardSize.width - 1; x >= 0; x--) {
-                this.slidePieceUp(board.pieces[x][y]);
+                var temp = this.slidePieceUp(board.pieces[x][y]);
+                if (temp) {
+                    hasSlid = true;
+                }
             }
             y++;
         }
+        return hasSlid;
     };
 
     this.slideDown = function() {
         var y = boardSize.height - 1;
+        var hasSlid = false;
+
         while (y >= 0) {
             for (var x = boardSize.width - 1; x >= 0; x--) {
-                this.slidePieceDown(board.pieces[x][y]);
+                var temp = this.slidePieceDown(board.pieces[x][y]);
+                if (temp) {
+                    hasSlid = true;
+                }
             }
             y--;
         }
+        return hasSlid;
     };
 
     this.slideLeft = function() {
         var x = 0;
+        var hasSlid = false;
         while (x <= boardSize.width - 1) {
             for (var y = boardSize.height - 1; y >= 0; y--) {
-                this.slidePieceLeft(board.pieces[x][y]);
+                var temp = this.slidePieceLeft(board.pieces[x][y]);
+                if (temp) {
+                    hasSlid = true;
+                }
             }
             x++;
         }
+        return hasSlid;
     };
 
     this.slideRight = function() {
         var x = boardSize.width - 1;
+        var hasSlid = false;
         while (x >= 0) {
-            for (vary = boardSize.height - 1; y >= 0; y--) {
-                this.slidePieceRight(board.pieces[x][y]);
+            for (var y = boardSize.height - 1; y >= 0; y--) {
+                var temp = this.slidePieceRight(board.pieces[x][y]);
+                if (temp) {
+                    hasSlid = true;
+                }
             }
             x--;
         }
+        return hasSlid;
     };
 
     this.slidePieceUp = function(piece) {
@@ -67,46 +89,135 @@ var SlideManager = function(board) {
         if (piece.getY() === 0) return;
         var curPiece = piece;
         var upPiece = board.pieces[curPiece.getX()][curPiece.getY() - 1];
+        var hasSlid = false;
 
-        while (curPiece.getY() !== 0 && upPiece.value === 0) {
+        while (curPiece.getY() > 0 &&
+            upPiece.value === 0) {
             //move up until we find a merge or hit the edge.
             upPiece.setValue(curPiece.value);
             curPiece.setValue(0);
             curPiece = upPiece;
             upPiece = board.pieces[curPiece.getX()][curPiece.getY() - 1];
-            // if (curPiece.getY() < 1) return;
-            // if (upPiece === undefined) return;
+            hasSlid = true;
         }
 
         if (upPiece !== undefined &&
-            curPiece.getY !== 0 &&
+            curPiece.getY() !== 0 &&
             upPiece.value == curPiece.value &&
             !upPiece.wasMerged) {
-
             //merge
             upPiece = board.pieces[curPiece.getX()][curPiece.getY() - 1];
             upPiece.setValue(curPiece.value * 2);
             curPiece.setValue(0);
             curPiece = upPiece;
             curPiece.wasMerged = true;
+            score += curPiece.value;
+            hasSlid = true;
         }
-
+        return hasSlid;
     };
 
 
     this.slidePieceDown = function(piece) {
         if (piece.value === 0) return;
+        if (piece.getY() === boardSize.height - 1) return;
+        var curPiece = piece;
         var downPiece = board.pieces[piece.getX()][piece.getY() + 1];
+        var hasSlid = false;
+
+        while (curPiece.getY() < boardSize.height - 1 &&
+            downPiece.value === 0) {
+            downPiece.setValue(curPiece.value);
+            curPiece.setValue(0);
+            curPiece = downPiece;
+            downPiece = board.pieces[curPiece.getX()][curPiece.getY() + 1];
+            hasSlid = true;
+        }
+
+        if (downPiece !== undefined &&
+            curPiece.getY() !== boardSize.height - 1 &&
+            downPiece.value == curPiece.value &&
+            !downPiece.wasMerged) {
+            //merge
+            downPiece = board.pieces[curPiece.getX()][curPiece.getY() + 1];
+            downPiece.setValue(curPiece.value * 2);
+            curPiece.setValue(0);
+            curPiece = downPiece;
+            curPiece.wasMerged = true;
+            score += curPiece.value;
+            hasSlid = true;
+        }
+        return hasSlid;
     };
 
     this.slidePieceLeft = function(piece) {
         if (piece.value === 0) return;
+        if (piece.getX() === 0) return;
+        var curPiece = piece;
         var leftPiece = board.pieces[piece.getX() - 1][piece.getY()];
+        var hasSlid = false;
+
+        while (curPiece.getX() > 0 &&
+            leftPiece.value === 0) {
+
+            leftPiece.setValue(curPiece.value);
+            curPiece.setValue(0);
+            curPiece = leftPiece; ///curPiece.getX()
+            if (curPiece.getX() !== 0) {
+                leftPiece = board.pieces[curPiece.getX() - 1][curPiece.getY()];
+            }
+            hasSlid = true;
+        }
+
+        if (leftPiece !== undefined &&
+            curPiece.getX() !== 0 &&
+            leftPiece.value == curPiece.value &&
+            !leftPiece.wasMerged) {
+            //merge
+            leftPiece = board.pieces[curPiece.getX() - 1][curPiece.getY()];
+            leftPiece.setValue(curPiece.value * 2);
+            curPiece.setValue(0);
+            curPiece = leftPiece;
+            curPiece.wasMerged = true;
+            score += curPiece.value;
+            hasSlid = true;
+        }
+        return hasSlid;
     };
 
     this.slidePieceRight = function(piece) {
         if (piece.value === 0) return;
+        if (piece.getX() === boardSize.width - 1) return;
+        var curPiece = piece;
         var rightPiece = board.pieces[piece.getX() + 1][piece.getY()];
+        var hasSlid = false;
+
+        while (curPiece.getX() < boardSize.width &&
+            rightPiece.value === 0) {
+
+            rightPiece.setValue(curPiece.value);
+            curPiece.setValue(0);
+            curPiece = rightPiece; ///curPiece.getX()
+            if (curPiece.getX() !== boardSize.width - 1) {
+                rightPiece = board.pieces[curPiece.getX() + 1][curPiece.getY()];
+            }
+            hasSlid = true;
+        }
+
+        if (rightPiece !== undefined &&
+            curPiece.getX() !== boardSize.width - 1 &&
+            rightPiece.value == curPiece.value &&
+            !rightPiece.wasMerged) {
+            //merge
+            rightPiece = board.pieces[curPiece.getX() + 1][curPiece.getY()];
+            rightPiece.setValue(curPiece.value * 2);
+            curPiece.setValue(0);
+            curPiece = rightPiece;
+            curPiece.wasMerged = true;
+            score += curPiece.value;
+            hasSlid = true;
+        }
+        return hasSlid;
     };
 
     this.resetMerges = function() {
@@ -117,172 +228,4 @@ var SlideManager = function(board) {
         }
     };
 
-};
-
-
-/*
-        Need to redo this.
-        Start from the bottom, when piece is found, go from current point to bottom.
-        prevents pieces blocking eachother.
-     */
-this.slideUp = function() {
-    for (var y = 0; y < boardSize.height; y++) {
-        for (var x = 0; x < boardSize.width; x++) {
-            this.trySlide(piece[x][y], "up");
-        }
-    }
-};
-
-this.slideDown = function() {
-    for (var y = boardSize.height - 1; y >= 0; y--) {
-        for (var x = 0; x < boardSize.width; x++) {
-            this.trySlide(piece[x][y], "down");
-        }
-    }
-};
-
-this.slideRight = function() {
-    for (var x = 0; x < boardSize.width; x++) {
-        for (var y = 0; y < boardSize.height; y++) {
-            this.trySlide(piece[x][y], "right");
-        }
-    }
-};
-
-this.slideLeft = function() {
-    for (var x = boardSize.width - 1; x >= 0; x--) {
-        for (var y = 0; y < boardSize.height; y++) {
-            this.trySlide(piece[x][y], "left");
-        }
-    }
-};
-
-this.trySlide = function(piece, direction) {
-    var currentPiece = piece;
-    var x = piece.getX();
-    var y = piece.getY();
-
-    switch (direction) {
-        case "up":
-            while (y >= 1) {
-                if (this.pieces[x][y - 1].value == currentPiece.value) {
-
-                }
-                y--;
-            }
-            break;
-        case "down":
-            break;
-        case "left":
-            break;
-        case "right":
-            break;
-        default:
-            alert("trySlide invalid direction!");
-            break;
-    }
-};
-
-this.slideUp = function() {
-    var hasSlid = false;
-    //start from bottom, move up.
-    //this lets us move up as much as possible.
-    //get list of empty squares
-    for (var i = boardSize.height - 1; i >= 1; i--) {
-        //we dont check the top row for moving up
-        for (var j = boardSize.width - 1; j >= 0; j--) {
-            if (this.pieces[j][i].value === 0) {
-                continue;
-            }
-            var piece = this.pieces[j][i];
-            var x = piece.getX();
-            var y = piece.getY();
-            if (this.pieces[x][y - 1].value === 0) { /*piece above is empty*/
-                /*move piece up*/
-                this.pieces[x][y - 1].setValue(piece.value);
-                piece.setValue(0);
-                hasSlid = true;
-            } else if (this.pieces[x][y - 1].value == piece.value) { /*piece above.value == this.value*/
-                /*combine*/
-                this.pieces[x][y - 1].setValue(piece.value * 2);
-                piece.setValue(0);
-                hasSlid = true;
-            }
-        }
-    }
-    return hasSlid;
-};
-this.slideDown = function() {
-    var hasSlid = false;
-    for (var i = 0; i < boardSize.height - 1; i++) {
-        //we dont check the bottom row for moving down
-        for (var j = 0; j < boardSize.width; j++) {
-            if (this.pieces[j][i].value === 0) {
-                continue;
-            }
-            var piece = this.pieces[j][i];
-            var x = piece.getX();
-            var y = piece.getY();
-            if (this.pieces[x][y + 1].value === 0) { /*piece below is empty*/
-                /*move piece down*/
-                this.pieces[x][y + 1].setValue(piece.value);
-                piece.setValue(0);
-                hasSlid = true;
-            } else if (this.pieces[x][y + 1].value == piece.value) { /*piece below.value == this.value*/
-                /*combine*/
-                this.pieces[x][y + 1].setValue(piece.value * 2);
-                piece.setValue(0);
-                hasSlid = true;
-            }
-        }
-    }
-    return hasSlid;
-};
-
-this.slideLeft = function() {
-    var hasSlid = false;
-    for (var j = boardSize.width - 1; j >= 1; j--) {
-        for (var i = boardSize.height - 1; i >= 0; i--) {
-            if (this.pieces[j][i].value === 0) {
-                continue;
-            }
-            var piece = this.pieces[j][i];
-            var x = piece.getX();
-            var y = piece.getY();
-            if (this.pieces[x - 1][y].value === 0) {
-                this.pieces[x - 1][y].setValue(piece.value);
-                piece.setValue(0);
-                hasSlid = true;
-            } else if (this.pieces[x - 1][y].value == piece.value) {
-                this.pieces[x - 1][y].setValue(piece.value * 2);
-                piece.setValue(0);
-                hasSlid = true;
-            }
-        }
-    }
-    return hasSlid;
-};
-
-this.slideRight = function() {
-    var hasSlid = false;
-    for (var j = 0; j < boardSize.width - 1; j++) {
-        for (var i = 0; i < boardSize.height; i++) {
-            if (this.pieces[j][i].value === 0) {
-                continue;
-            }
-            var piece = this.pieces[j][i];
-            var x = piece.getX();
-            var y = piece.getY();
-            if (this.pieces[x + 1][y].value === 0) {
-                this.pieces[x + 1][y].setValue(piece.value);
-                piece.setValue(0);
-                hasSlid = true;
-            } else if (this.pieces[x + 1][y].value == piece.value) {
-                this.pieces[x + 1][y].setValue(piece.value * 2);
-                piece.setValue(0);
-                hasSlid = true;
-            }
-        }
-    }
-    return hasSlid;
 };
