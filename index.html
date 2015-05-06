@@ -45,8 +45,9 @@
             var mutationRate = 0.05;
             var winners = 8;
 
-            var genetic = true;
+            var genetic = false;
             var bot;
+            var restart = true;
 
             function preload() {
                 board.init();
@@ -68,6 +69,7 @@
 
             function update() {
                 if (hasSlid) {
+                    document.getElementById("score").innerHTML = "score: " + score;
                     board.displayGrid();
                     hasSlid = false;
                 }
@@ -106,9 +108,14 @@
 
                 //if shifted, add a new piece
                 if (hasSlid) {
-                    board.addRandomPiece();
-                } else {
-                    //gameOver
+                    if(board.addRandomPiece() === false){
+                        //gameover
+                        console.log("game over!");
+                        if(restart){
+                            preload();
+                            create();
+                        }
+                    }
                 }
 
                 // console.log(score);
@@ -118,5 +125,6 @@
 
             }
             </script>
+        <p id="score">score: 0</p>
     </body>
 </html>

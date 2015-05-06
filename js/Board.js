@@ -87,7 +87,11 @@ var Board = function() {
             randomValue = 2;
         }
 
-        emptySquare.setValue(randomValue);
+        if (emptySquare !== false) {
+            emptySquare.setValue(randomValue);
+        } else {
+            return false;
+        }
     };
 
     this.getEmptySquare = function() {
@@ -106,7 +110,7 @@ var Board = function() {
 
         if (index === 0) {
             console.log("no empty squares!");
-            return;
+            return false;
         }
 
         //pick random index
