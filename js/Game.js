@@ -1,6 +1,6 @@
 var score = 0;
 
-var canvasSize = 500;
+var canvasSize = 300;
 var margin = canvasSize / 160 * 3;
 var boardSize = {
     width: 4,
@@ -17,9 +17,9 @@ var slideManager = new SlideManager(board);
 var hasSlid = false;
 
 var currentPopulation = 0;
-var populationSize = 10;
+var populationSize = 4;
 var mutationRate = 0.05;
-var winners = 8;
+var winners = 3;
 
 var genetic = true;
 var bot;
@@ -35,21 +35,27 @@ var Game = function() {
     };
 
     this.create = function() {
-        console.log("generation: " + currentGeneration);
-        console.log("currentPopulation: " + currentPopulation);
+
         if (genetic) {
-            bot = new Bot();
+            if (savedWinnerList !== undefined) {
+                bot = new Bot(savedWinnerList);
+            } else {
+                bot = new Bot();
+            }
             bot.init();
             if (currentPopulation >= populationSize) {
-                bot = new Bot(getParents(savedWinnerList));
+
                 console.log("start next generation.");
-                savedWinnerList = winnerList;
-                this.currentPopulation = 0;
+                savedWinnerList = getParents(winnerList);
+
+                currentPopulation = 0;
                 winnerList = [];
                 currentGeneration++;
             }
 
         }
+        console.log("generation: " + currentGeneration);
+        console.log("currentPopulation: " + currentPopulation);
 
         board.start();
         board.displayGrid();
@@ -69,6 +75,7 @@ var Game = function() {
                 console.log("game over!");
                 if (restart) {
                     bot.score = score;
+                    score = 0;
                     addToWinners(bot);
                     currentPopulation++;
                     preload();
@@ -131,27 +138,30 @@ var checkUserKeys = function() {
     return hasSlid;
 };
 
-var getParents = function(winnerList) {
+var getParents = function(list) {
     var parents = [];
-    var sum;
+    var sum = 0;
     var index = 0;
     //get Sum
     for (var i = 0; i < winners; i++) {
-        sum += winnerList[i].score;
+        sum += list[i].score;
     }
+
+    console.log("avg: " + sum / winners);
+
     //make room for mutation;
     sum *= 1.05;
 
     //get count per winner
     for (var i = 0; i < winners; i++) {
-        winnerList[i].score = winnerList[i].score / sum * 100;
+        list[i].score = list[i].score / sum * 100;
     }
 
     //go through each winner, and put it in the parents.
     while (index < 94) {
         for (var i = 0; i < winners; i++) {
-            for (var j = 0; j < winnerList[i].score; j++) {
-                parents[index] = winnerList[j];
+            for (var j = 0; j < list[i].score; j++) {
+                parents[index] = list[i];
                 index++;
             }
         }
@@ -160,5 +170,6 @@ var getParents = function(winnerList) {
         var mutationBot = new Bot();
         mutationBot.random = true;
         parents[index] = mutationBot;
+        index++;
     }
 };
