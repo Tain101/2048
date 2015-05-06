@@ -40,7 +40,7 @@ var Board = function() {
             }
         }
         /////////////////////
-        var graphics = game.add.graphics(0, 0);
+        var graphics = phaserGame.add.graphics(0, 0);
         // draw a rectangle
         graphics.lineStyle(5, 0x000000, 1);
         graphics.beginFill(0x888888, 1);
@@ -62,14 +62,14 @@ var Board = function() {
     };
 
     this.draw = function(piece) {
-        var graphics = game.add.graphics(0, 0);
+        var graphics = phaserGame.add.graphics(0, 0);
         graphics.lineStyle(5, 0x000000, 1);
         graphics.beginFill(piece.color, 1);
         graphics.drawRect(
             (margin + pieceSize * piece.getX()), (margin + pieceSize * piece.getY()), (pieceSize), (pieceSize)
         );
         graphics.endFill();
-        text = game.add.text(
+        text = phaserGame.add.text(
             pieceSize * piece.getX() + pieceSize / 2,
             pieceSize * piece.getY() + pieceSize / 2,
             piece.value
@@ -92,6 +92,8 @@ var Board = function() {
         } else {
             return false;
         }
+
+        return true;
     };
 
     this.getEmptySquare = function() {

@@ -8,6 +8,7 @@
         <script src="js/Piece.js"></script>
         <script src="js/SlideManager.js"></script>
         <script src="js/Bot.js"></script>
+        <script src="js/Game.js"></script>
 
         <style>
             body {
@@ -18,111 +19,23 @@
     <body>
         <script type="text/javascript">
 
-            var score = 0;
-
-            var canvasSize = 500;
-            var margin = canvasSize / 160 * 3;
-            var boardSize = {
-                width: 4,
-                height: 4
-            };
-            var pieceSize = canvasSize / 4 * 0.95;
-
-            var game = new Phaser.Game(canvasSize, canvasSize, Phaser.AUTO, '', {
+            var phaserGame = new Phaser.Game(canvasSize, canvasSize, Phaser.AUTO, '', {
                 preload: preload,
                 create: create,
                 update: update
             });
-            var cursors;
-            var allowKeys = true;
-
-            var board = new Board();
-            var slideManager = new SlideManager(board);
-
-            var hasSlid = false;
-
-            var populationSize = 50;
-            var mutationRate = 0.05;
-            var winners = 8;
-
-            var genetic = false;
-            var bot;
-            var restart = true;
+            var game = new Game();
 
             function preload() {
-                board.init();
-                cursors = game.input.keyboard.createCursorKeys();
+                game.preload();
             }
 
             function create() {
-                //generate 2 pieces in random points
-                //enable keybinds
-                board.start();
-                board.displayGrid();
-
-                if(genetic){
-                    bot = new Bot();
-                    bot.init();
-                }
-
+                game.create();
             }
 
             function update() {
-                if (hasSlid) {
-                    document.getElementById("score").innerHTML = "score: " + score;
-                    board.displayGrid();
-                    hasSlid = false;
-                }
-                //slide acordingly
-                if (genetic) {
-                    hasSlid = bot.move();
-                } else {
-                    if (allowKeys) {
-                        if (cursors.up.isDown) {
-                            hasSlid = slideManager.slideUp();
-                            allowKeys = false;
-                        } else if (cursors.down.isDown) {
-                            hasSlid = slideManager.slideDown();
-                            allowKeys = false;
-                        } else if (cursors.left.isDown) {
-                            hasSlid = slideManager.slideLeft();
-                            allowKeys = false;
-                        } else if (cursors.right.isDown) {
-                            hasSlid = slideManager.slideRight();
-                            allowKeys = false;
-                        }
-                    } else {
-                        if (cursors.up.isDown) {
-                            allowKeys = false;
-                        } else if (cursors.down.isDown) {
-                            allowKeys = false;
-                        } else if (cursors.left.isDown) {
-                            allowKeys = false;
-                        } else if (cursors.right.isDown) {
-                            allowKeys = false;
-                        } else {
-                            allowKeys = true;
-                        }
-                    }
-                }
-
-                //if shifted, add a new piece
-                if (hasSlid) {
-                    if(board.addRandomPiece() === false){
-                        //gameover
-                        console.log("game over!");
-                        if(restart){
-                            preload();
-                            create();
-                        }
-                    }
-                }
-
-                // console.log(score);
-                if (hasSlid) {
-                    slideManager.resetMerges();
-                }
-
+                game.update();
             }
             </script>
         <p id="score">score: 0</p>

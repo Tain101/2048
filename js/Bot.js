@@ -11,20 +11,27 @@
         randomly choose from parents/mutation.
  */
 
-var Bot = function() {
+var Bot = function(parents) {
     this.id = 0;
     this.score = 0;
-    this.seed;
+    this.seed = undefined;
     this.moveList = [0];
     this.random = false;
     this.currentMove = 0;
+    this.parents = parents;
 
     this.init = function() {
-        this.setMoveList();
+
+        if (winnerList !== undefined) {
+            this.setMoveList();
+        } else {
+            this.setMoveList();
+        }
+
     };
 
 
-    this.setMoveList = function(parents) {
+    this.setMoveList = function() {
         var moveListSize = 0;
         //create based on parents.
         if (parents !== undefined) {
