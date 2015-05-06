@@ -20,7 +20,6 @@ var SlideManager = function(board) {
      score += curPiece.value;
      *                      which will need to be reset later.
      *
-     * @return {[type]} [description]
      */
 
     this.slideUp = function() {
