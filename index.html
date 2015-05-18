@@ -3,6 +3,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>2048</title>
+        <script type="text/javascript">
+            var canvasSize = 300;
+            var margin = canvasSize / 160 * 3;
+        </script>
         <script src="js/phaser.min.js"></script>
         <script src="js/Board.js"></script>
         <script src="js/Piece.js"></script>
@@ -18,8 +22,7 @@
     </head>
     <body>
         <script type="text/javascript">
-            var canvasSize = 300;
-            var margin = canvasSize / 160 * 3;
+
 
             var phaserGame = new Phaser.Game(canvasSize, canvasSize, Phaser.AUTO, '', {
                 preload: preload,
