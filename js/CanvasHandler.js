@@ -2,6 +2,18 @@ var CanvasHandler = function() {
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
 
+    this.preload = function (arguments) {
+        // body...
+    };
+
+    this.create = function (arguments) {
+        // body...
+    };
+
+    this.update = function(arguments) {
+        // body...
+    };
+
     this.drawBox = function(dimensions, color) {
         if (dimensions === undefined) {
             dimensions = defaultDim;

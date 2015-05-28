@@ -3,7 +3,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>2048</title>
-         <canvas id="canvas" width="300" height="300" />
         <script type="text/javascript">
             var canvasSize = 300;
             var margin = canvasSize / 160 * 3;
@@ -15,10 +14,9 @@
         <script src="js/SlideManager.js"></script>
         <script src="js/Bot.js"></script>
         <script src="js/Game.js"></script>
-
         <style>
             body {
-                margin: 0;
+            margin: 0;
             }
         </style>
     </head>
@@ -32,24 +30,22 @@
             });
 
             var game = new Game();
+            // var canvasHandler = new CanvasHandler();
 
             function preload() {
                 phaserGame.stage.disableVisibilityChange = true;
                 game.preload();
-                CanvasHandler.preload();
+                // canvasHandler.preload();
             }
-
             function create() {
                 game.create();
-                CanvasHandler.create();
+                // canvasHandler.create();
             }
-
             function update() {
                 game.update();
-                CanvasHandler.update();
+                // canvasHandler.update();
             }
-
-            </script>
+        </script>
         <p id="score"               >current score:         0</p>
         <p id="bot"                 >current bot:           0</p>
         <p id="generation"          >generation:            0</p>

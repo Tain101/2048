@@ -9,32 +9,53 @@ var Piece = function() {
 
     this.setValue = function(value) {
         this.value = value;
-        this.color = 0x888888;
-        var switchValue = Math.log2(value);
-        if (switchValue < 0) switchValue = 0;
-        switchValue = Math.floor(switchValue);
-        switchValue = switchValue % 5;
-        switch (switchValue) {
-            case 0: //000
-                this.color = 0x8888dd;
+        this.color = 0x5f5f5f;
+        switch (value) {
+            case 2:
+                this.color = 0x36af90;
                 break;
-            case 1: //001
-                this.color = 0x88dddd;
+            case 4:
+                this.color = 0xe7db75;
                 break;
-            case 2: //011
-                this.color = 0xdddddd;
+            case 8:
+                this.color = 0xe52e71;
                 break;
-            case 3: //110
-                this.color = 0xdddd88;
+            case 16:
+                this.color = 0xd96926;
                 break;
-            case 4: //110
-                this.color = 0xdd8888;
+            case 32:
+                this.color = 0x9c992d;
                 break;
-            default:
+            case 64:
+                this.color = 0xa082d9;
+                break;
+            case 128:
+                this.color = 0x76715e;
+                break;
+            case 256:
+                this.color = 0x6cc72c;
+                break;
+            case 512:
+                this.color = 0x5f5f5f;
+                break;
+            case 1024:
+                this.color = 0x71c933;
+                break;
+            case 2048:
+                this.color = 0x71c933;
+                break;
+            case 4096:
+                this.color = 0x48483e;
+                break;
+            case 8192:
+                this.color = 0x48483e;
+                break;
+            case 16384:
+                this.color = 0x000000;
+                break;
+
         }
-        if (this.value === 0) {
-            this.color = 0x888888;
-        }
+
     };
 
     this.setLocation = function(x, y) {

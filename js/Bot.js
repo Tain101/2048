@@ -108,7 +108,7 @@ var Bot = function(parents) {
 
     this.clean = function() {
         this.id = 0;
-        this.score = 0;
+        // this.score = 0;
         this.seed = undefined;
         this.random = false;
         this.currentMove = 0;
