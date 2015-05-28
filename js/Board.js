@@ -18,8 +18,8 @@ var Board = function() {
     ];
 
     this.init = function() {
-        for (var i = 0; i < boardSize.height; i++) {
-            for (var j = 0; j < boardSize.width; j++) {
+        for (i = 0; i < boardSize.height; i++) {
+            for (j = 0; j < boardSize.width; j++) {
                 if (this.pieces[j] === undefined) {
                     this.pieces[j] = [];
                 }
@@ -107,8 +107,8 @@ var Board = function() {
         var index = 0;
 
         //get list of empty squares
-        for (var i = 0; i < boardSize.height; i++) {
-            for (var j = 0; j < boardSize.width; j++) {
+        for (i = 0; i < boardSize.height; i++) {
+            for (j = 0; j < boardSize.width; j++) {
                 if (this.pieces[j][i].value === 0) {
                     emptyList[index] = this.pieces[j][i];
                     index++;

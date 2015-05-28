@@ -32,19 +32,24 @@ var Bot = function(parents) {
 
 
     this.setMoveList = function() {
+
         var moveListSize = 0;
         //create based on parents.
         if (this.parents !== undefined) {
+
             //find largest movelist
-            for (var i = this.parents.length - 1; i >= 0; i--) {
+            for (i = this.parents.length - 1; i >= 0; i--) {
                 if (this.parents.moveList.length > moveListSize) {
                     moveListSize = this.parents.moveList.length;
                 }
             }
+
             //generate moveList for child.
-            for (var i = moveListSize - 1; i >= 0; i--) {
+            for (i = moveListSize - 1; i >= 0; i--) {
+
                 var randomIndex = Math.round(Math.random() * 100);
                 var start = randomIndex;
+
                 do {
                     randomIndex++;
                     randomIndex %= moveListSize;
@@ -99,5 +104,14 @@ var Bot = function(parents) {
 
     this.moveRandom = function() {
         return Math.round(Math.random() * 100) % 4;
+    };
+
+    this.clean = function() {
+        this.id = 0;
+        this.score = 0;
+        this.seed = undefined;
+        this.random = false;
+        this.currentMove = 0;
+        this.parents = null;
     };
 };

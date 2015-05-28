@@ -3,11 +3,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>2048</title>
+         <canvas id="canvas" width="300" height="300" />
         <script type="text/javascript">
             var canvasSize = 300;
             var margin = canvasSize / 160 * 3;
         </script>
         <script src="js/phaser.min.js"></script>
+        <script src="js/CanvasHandler.js"></script>
         <script src="js/Board.js"></script>
         <script src="js/Piece.js"></script>
         <script src="js/SlideManager.js"></script>
@@ -22,6 +24,7 @@
     </head>
     <body>
         <script type="text/javascript">
+            var i, j, k;
             var phaserGame = new Phaser.Game(canvasSize, canvasSize, Phaser.AUTO, '', {
                 preload: preload,
                 create: create,
@@ -31,18 +34,26 @@
             var game = new Game();
 
             function preload() {
+                phaserGame.stage.disableVisibilityChange = true;
                 game.preload();
+                CanvasHandler.preload();
             }
 
             function create() {
                 game.create();
+                CanvasHandler.create();
             }
 
             function update() {
                 game.update();
+                CanvasHandler.update();
             }
 
             </script>
-        <p id="score">score: 0</p>
+        <p id="score"               >current score:         0</p>
+        <p id="bot"                 >current bot:           0</p>
+        <p id="generation"          >generation:            0</p>
+        <p id="generationAverage"   >generation average:    0</p>
+        <p id="average"             >total average:         0</p>
     </body>
 </html>

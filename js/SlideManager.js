@@ -220,8 +220,8 @@ var SlideManager = function(board) {
     };
 
     this.resetMerges = function() {
-        for (var i = boardSize.height - 1; i >= 0; i--) {
-            for (var j = boardSize.width - 1; j >= 0; j--) {
+        for (i = boardSize.height - 1; i >= 0; i--) {
+            for (j = boardSize.width - 1; j >= 0; j--) {
                 board.pieces[j][i].wasMerged = false;
             }
         }
