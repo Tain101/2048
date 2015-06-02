@@ -21,30 +21,40 @@
     </head>
     <body>
         <p id="score"               >current score: 0</p>
+        <p id="lastScore"           >last score: 0</p>
         <p id="bot"                 >current bot: 0</p>
         <p id="generation"          >generation: 0</p>
         <p id="generationAverage"   >generation average: 0</p>
         <p id="average"             >total average: 0</p>
         <p id="highest"             >highest: 0</p>
         <p id="lowest"              >lowest: 0</p>
+        <p id="averageChange"       >averageChange: 0</p>
+        <p id="lastChange"          >lastChange: 0</p>
         <canvas id="canvas" width=300 height=300/>
         <script type="text/javascript">
-            var i, j, k;
-            // var phaserGame = new Phaser.Game(canvasSize, canvasSize, Phaser.AUTO, '', {
-                // preload: preload,
-                // create: create,
-                // update: update
-            // });
-
+            //objects
             var game = new Game();
             var board = new Board();
             var canvasHandler = new CanvasHandler(board);
             var slideManager = new SlideManager(board);
-            var fps = 120;
 
+            //data
+            var fps = 120;
+            var score = 0;
+            var lastScore = 0;
+            var generationScore = 0;
+            var totalScore = 0;
+            var highest = 0;
+            var lowest = 0;
+            var lastChange = 0;
+            var averageChange = 0;
+            var totalChange = 0;
+
+            var currentPopulation = 0;
+            var totalPopulation = 0;
+            var currentGeneration = 0;
 
             function preload() {
-                // phaserGame.stage.disableVisibilityChange = true;
                 game.preload();
                 board.preload();
                 canvasHandler.preload(board);
@@ -54,16 +64,73 @@
                 game.create();
                 board.create();
                 canvasHandler.create(board);
+                board.start();
             }
 
             function update() {
                 game.update();
                 board.update();
                 canvasHandler.update(board);
+                updateHtml();
             }
+
             preload();
             create();
             setInterval(update, 1000/fps);
+
+            var updateHtml = function() {
+                var doc;
+                doc = document.getElementById("score");
+                doc.innerHTML = "score: " + score;
+
+                doc = document.getElementById("lastScore");
+                doc.innerHTML = "last score: " + lastScore;
+
+                doc = document.getElementById("bot");
+                doc.innerHTML = "current bot: " + currentPopulation;
+
+                doc = document.getElementById("generation");
+                doc.innerHTML = "generation: " + currentGeneration;
+
+                doc = document.getElementById("generationAverage");
+                doc.innerHTML = "generation average: " + (generationScore / currentPopulation).toFixed(1);
+
+                doc = document.getElementById("average");
+                doc.innerHTML = "total average: " + (totalScore / totalPopulation).toFixed(1);
+
+                doc = document.getElementById("highest");
+                doc.innerHTML = "highest: " + highest;
+
+                doc = document.getElementById("lowest");
+                doc.innerHTML = "lowest: " + lowest;
+
+                doc = document.getElementById("averageChange");
+                doc.innerHTML = "averageChange: " + averageChange.toFixed(1);
+
+                doc = document.getElementById("lastChange");
+                doc.innerHTML = "lastChange: " + lastChange;
+            };
+
+            var updateStats = function () {
+                if(score > highest){
+                    highest = score;
+                }
+
+                if(score < lowest || lowest == 0){
+                    lowest = score;
+                }
+
+                lastChange = score - lastScore;
+                totalChange += lastChange;
+                averageChange = totalChange / totalPopulation;
+
+                lastScore = score;
+                score = 0;
+                currentPopulation++;
+                totalPopulation++;
+                totalScore += bot.score;
+                generationScore += bot.score;
+            };
         </script>
 
     </body>

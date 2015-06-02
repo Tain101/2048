@@ -20,7 +20,7 @@ var Bot = function(parents) {
     this.currentMove = 0;
     this.parents = parents;
 
-    this.init = function() {
+    this.create = function() {
 
         if (winnerList !== undefined) {
             this.setMoveList();

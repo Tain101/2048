@@ -1,48 +1,39 @@
+/**
+ * Game Object, handles all logic related to the game itself.
+ *     - mostly handles the indivual 'turns', and actions when a game ends.
+ */
 var cursors;
 var allowKeys = true;
-
-// var board = new Board();
-
-
-var score = 0;
-var populationSize = 20;
+var populationSize = 100;
 var mutationRate = 0.05;
-var winners = 7;
-
+var winners = 15;
 var hasSlid = false;
-
 var genetic = true;
 var restart = true;
 var bot;
 var winnerList = [];
 var savedWinnerList;
-var currentPopulation = 0;
-var currentGeneration = 0;
-var generationScore = 0;
-var totalScore = 0;
-var totalPopulation = 0;
 
 var Game = function() {
 
-    this.preload = function() {
-        // cursors = phaserGame.input.keyboard.createCursorKeys();
-    };
+    this.preload = function() {};
 
     this.create = function() {
+        //if the game is 'genetic' we will have bots
         if (genetic) {
+            //create bot based on last gen's winners if possible
             if (savedWinnerList !== undefined) {
                 bot = new Bot(savedWinnerList);
             } else {
                 bot = new Bot();
             }
 
-            bot.init();
+            bot.create();
 
+            //
             if (currentPopulation >= populationSize) {
-
                 console.log("starting next generation!");
                 savedWinnerList = getParents(winnerList);
-
                 currentPopulation = 0;
                 generationScore = 0;
                 winnerList = [];
@@ -51,15 +42,12 @@ var Game = function() {
         }
 
         console.log("generation: " + currentGeneration);
-        document.getElementById("generation").innerHTML = "generation: " + currentGeneration;
         console.log("currentPopulation: " + currentPopulation);
-        document.getElementById("bot").innerHTML = "current bot: " + currentPopulation;
 
-        board.create();
-        board.start();
     };
 
     this.update = function() {
+
         if (genetic) {
             hasSlid = bot.move();
         } else {
@@ -72,20 +60,15 @@ var Game = function() {
                 console.log("game over!");
                 if (restart) {
                     bot.score = score;
-                    score = 0;
                     addToWinners(bot);
-                    currentPopulation++;
-                    totalPopulation++;
-                    totalScore += bot.score;
-                    generationScore += bot.score;
+                    updateStats();
                     bot.clean();
-                    document.getElementById("generationAverage").innerHTML = "generation average:    " + (generationScore / currentPopulation).toFixed(1);
-                    document.getElementById("average").innerHTML = "total average:         " + (totalScore / totalPopulation).toFixed(1);
+                    //call preload & create to restart the game.
                     preload();
                     create();
                 }
             }
-            document.getElementById("score").innerHTML = "score: " + score;
+
 
             hasSlid = false;
             slideManager.resetMerges();
@@ -95,6 +78,7 @@ var Game = function() {
 
 var addToWinners = function(bot) {
     //insertion sort
+    var i;
     i = winners;
     winnerList[i] = bot;
     while (i > 0) {
@@ -109,10 +93,20 @@ var addToWinners = function(bot) {
     }
 };
 
+/**
+ * depreciated: was using phaser library, that is no longer being used.
+ *
+ * @return {Bool} If the user has caused the board to slide.
+ */
+
 var checkUserKeys = function() {
     var hasSlid = false;
+
+    //prevents multiple moves if the user is holding a key.
     if (allowKeys) {
         if (cursors.up.isDown) {
+            //only returns true if the board has actually slid.
+            //eg. - If the user presses down & none of the pieces move
             hasSlid = slideManager.slideUp();
             allowKeys = false;
         } else if (cursors.down.isDown) {
@@ -153,6 +147,7 @@ var getParents = function(list) {
     var parents = [];
     var sum = 0;
     var index = 0;
+    var i, j;
 
     //get Sum
     for (i = 0; i < winners; i++) {
