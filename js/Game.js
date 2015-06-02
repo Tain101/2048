@@ -8,8 +8,7 @@ var populationSize = 100;
 var mutationRate = 0.05;
 var winners = 15;
 var hasSlid = false;
-var genetic = true;
-var restart = true;
+
 var bot;
 var winnerList = [];
 var savedWinnerList;
