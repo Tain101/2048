@@ -1,6 +1,6 @@
 var Piece = function() {
     this.value = 0;
-    this.color = 0x888888;
+    this.color = 0x888888; //todo remove
     this.location = {
         x: 0,
         y: 0

@@ -1,13 +1,13 @@
 var cursors;
 var allowKeys = true;
 
-var board = new Board();
-var slideManager = new SlideManager(board);
+// var board = new Board();
+
 
 var score = 0;
 var populationSize = 20;
 var mutationRate = 0.05;
-var winners = 3;
+var winners = 7;
 
 var hasSlid = false;
 
@@ -23,9 +23,9 @@ var totalScore = 0;
 var totalPopulation = 0;
 
 var Game = function() {
+
     this.preload = function() {
-        board.init();
-        cursors = phaserGame.input.keyboard.createCursorKeys();
+        // cursors = phaserGame.input.keyboard.createCursorKeys();
     };
 
     this.create = function() {
@@ -55,8 +55,8 @@ var Game = function() {
         console.log("currentPopulation: " + currentPopulation);
         document.getElementById("bot").innerHTML = "current bot: " + currentPopulation;
 
+        board.create();
         board.start();
-        board.displayGrid();
     };
 
     this.update = function() {
@@ -86,7 +86,7 @@ var Game = function() {
                 }
             }
             document.getElementById("score").innerHTML = "score: " + score;
-            board.displayGrid();
+
             hasSlid = false;
             slideManager.resetMerges();
         }
