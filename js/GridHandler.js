@@ -158,7 +158,22 @@ var gridHandler = function(canvasHandler) {
     };
 
     this.placeGridNumbers = function() {
+        if (minScore != 999999 && maxScore !== 0 && minScore != maxScore) {
+            var minScoreDimensions = [0, 280, 10, 10];
+            drawText(minScore, minScoreDimensions, context, 10);
 
+            var maxScoreDimensions = [0, 5, 10, 10];
+            drawText(maxScore, maxScoreDimensions, context, 10);
+        }
+
+        if (maxGen !== 0) {
+            var minGenDim = [10, 290, 10, 10];
+            drawText(0, minGenDim, context, 10);
+
+            var maxGenDim = [260, 290, 10, 10];
+            drawText(maxGen, maxGenDim, context, 10);
+        }
+        //x = 0 - maxGen
     };
 
     this.drawPoint = function(x, y) {

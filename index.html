@@ -1,3 +1,10 @@
+<!--
+    Uses the games score to determine the bot's performance.
+    Bot's pass on move's at a given index.
+    Currently using a seed so games are consistent.
+    Generations go in a sin pattern.
+    Either need to change or remove seeding.
+-->
 <!DOCTYPE html>
 <html>
 
@@ -51,6 +58,9 @@
             var fps = 1000/parseInt(document.getElementById("FPS").value, 10);
             var genetic = true;
             var restart = true;
+            var populationSize = 2;
+            var mutationRate = 0.05;
+            var winners = 1;
 
             //objects
             var game = new Game();
@@ -60,7 +70,6 @@
             var slideManager = new SlideManager(board);
 
             //data
-
             var score = 0;
             var lastScore = 0;
             var generationScore = 0;

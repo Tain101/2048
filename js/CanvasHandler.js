@@ -78,11 +78,7 @@ var CanvasHandler = function(inBoard) {
     };
 
     this.drawText = function(text, dimensions) {
-        var x = dimensions[0] + dimensions[2] / 2 - dimensions[2] / 4;
-        var y = dimensions[1] + dimensions[3] / 2 + dimensions[3] / 5;
-        this.context.font = '20pt Calibri'
-        this.context.fillStyle = "#d9d9d9";
-        this.context.fillText(text, x, y);
+        drawText(text, dimensions, this.context);
     };
 
     this.drawImage = function(image, dimensions) {
@@ -179,4 +175,15 @@ var drawBox = function(color, dimensions, context) {
     }
     context.fillStyle = color;
     context.fillRect(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
+};
+
+var drawText = function(text, dimensions, context, size) {
+    var x = dimensions[0] + dimensions[2] / 2 - dimensions[2] / 4;
+    var y = dimensions[1] + dimensions[3] / 2 + dimensions[3] / 5;
+    context.font = '20pt Calibri';
+    if (size) {
+        context.font = size + 'pt Calibri';
+    }
+    context.fillStyle = "#d9d9d9";
+    context.fillText(text, x, y);
 };
