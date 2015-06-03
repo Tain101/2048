@@ -6,6 +6,7 @@ var gridHandler = function(canvasHandler) {
     var height = 300;
 
     var maxScore = 0;
+    var minScore = 999999;
     var maxGen = 0;
 
     //pixels per generation
@@ -66,10 +67,14 @@ var gridHandler = function(canvasHandler) {
 
     this.setScale = function() {
         maxScore = 0;
+        minScore = 999999;
         maxGen = 0;
         for (var i = 0; i < this.points.length; i++) {
             if (this.points[i] > maxScore) {
                 maxScore = this.points[i];
+            }
+            if (this.points[i] < minScore) {
+                minScore = this.points[i];
             }
             maxGen = i;
         }
@@ -81,13 +86,13 @@ var gridHandler = function(canvasHandler) {
     this.placePoints = function() {
         for (var i = 0; i < this.points.length; i++) {
             var x = i * 300 / maxGen;
-            var y = 300 - (this.points[i] * 300 / maxScore);
+            var y = scaleValue(this.points[i], 0, 300, minScore, maxScore);
 
 
             this.drawPoint(x, y);
             if (this.points[i + 1]) {
                 var x1 = (i + 1) * 300 / maxGen;
-                var y1 = 300 - (this.points[i + 1] * 300 / maxScore)
+                var y1 = scaleValue(this.points[i + 1], 0, 300, minScore, maxScore);
                 var color = "#e52e71";
                 drawLine({
                     x: x,
@@ -169,4 +174,17 @@ var gridHandler = function(canvasHandler) {
     };
 
 
+};
+
+//        (b-a)(x - min)
+// f(x) = --------------  + a
+//           max - min
+var scaleValue = function(x, a, b, min, max) {
+    // var a = 0;
+    // var b = 300;
+    // var min = minScore;
+    // var max = maxScore;
+
+    var r = (((b - a) * (x - min)) / (max - min)) + a;
+    return r;
 };

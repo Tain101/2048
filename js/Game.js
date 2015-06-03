@@ -4,9 +4,9 @@
  */
 var cursors;
 var allowKeys = true;
-var populationSize = 100;
+var populationSize = 2;
 var mutationRate = 0.05;
-var winners = 20;
+var winners = 1;
 var hasSlid = false;
 
 var bot;
