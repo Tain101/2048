@@ -7,10 +7,10 @@
         <script type="text/javascript">
         var canvasSize = 300;
         var margin = canvasSize / 160 * 3;
-
         </script>
         <link rel="stylesheet" type="text/css" href="./style.css">
         <script src="js/CanvasHandler.js"></script>
+        <script src="js/GridHandler.js"></script>
         <script src="js/Board.js"></script>
         <script src="js/Piece.js"></script>
         <script src="js/SlideManager.js"></script>
@@ -43,7 +43,8 @@
         </span>
 
 
-        <canvas id="canvas" width=300 height=300/>
+        <p><canvas id="canvas" width=300 height=300/></p>
+        <p><canvas id="graph" width=300 height=300/></p>
         <script type="text/javascript">
             //user options
             // var fps = 1000;
@@ -55,6 +56,7 @@
             var game = new Game();
             var board = new Board();
             var canvasHandler = new CanvasHandler(board);
+            var gridHandler = new gridHandler(new CanvasHandler());
             var slideManager = new SlideManager(board);
 
             //data
@@ -83,6 +85,7 @@
                 game.create();
                 board.create();
                 canvasHandler.create(board);
+                gridHandler.create();
                 board.start();
             }
 
@@ -90,6 +93,7 @@
                 game.update();
                 board.update();
                 canvasHandler.update(board);
+                gridHandler.update();
                 updateHtml();
             }
 

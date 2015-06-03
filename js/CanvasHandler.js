@@ -1,15 +1,15 @@
 var CanvasHandler = function(inBoard) {
-    var canvas = document.getElementById("canvas");
-    var context = canvas.getContext("2d");
-    var width = canvas.width;
-    var height = canvas.height;
+    this.canvas = document.getElementById("canvas");
+    this.context = this.canvas.getContext("2d");
+    var width = this.canvas.width;
+    var height = this.canvas.height;
     this.board = inBoard;
 
 
 
     this.preload = function() {
-        context.fillStyle = "#5f5f5f";
-        context.fillRect(0, 0, width, height);
+        this.context.fillStyle = "#5f5f5f";
+        this.context.fillRect(0, 0, width, height);
     };
 
     this.create = function(inBoard) {
@@ -18,13 +18,13 @@ var CanvasHandler = function(inBoard) {
     };
 
     this.update = function() {
-        context.clearRect(0, 0, width, height);
+        this.context.clearRect(0, 0, width, height);
         if (this.board) {
             this.drawBoard();
         } else {
             this.drawBoard();
-            context.fillStyle = "#5f5f5f";
-            context.fillRect(0, 0, width, height);
+            this.context.fillStyle = "#5f5f5f";
+            this.context.fillRect(0, 0, width, height);
         }
     };
 
@@ -45,36 +45,49 @@ var CanvasHandler = function(inBoard) {
         var dim = getDimensions(piece);
         this.drawBox(color, dim);
         this.drawText(value, dim);
+
+        //draw outline around each piece
+        var c0 = {
+            x: dim[0],
+            y: dim[1]
+        };
+        var c1 = {
+            x: dim[0],
+            y: dim[1] + dim[3]
+        };
+        var c2 = {
+            x: dim[0] + dim[2],
+            y: dim[1] + dim[3]
+        };
+        var c3 = {
+            x: dim[0] + dim[2],
+            y: dim[1]
+        };
+        this.drawLine(c0, c1);
+        this.drawLine(c1, c2);
+        this.drawLine(c2, c3);
+        this.drawLine(c3, c0);
     };
 
     this.drawBox = function(color, dimensions) {
-        if (dimensions === undefined) {
-            throw "No Dimensions in canvasHandler.drawBox()";
-        }
-        if (color === undefined) {
-            color = "#5f5f5f";
-        }
-        context.fillStyle = color;
-        context.fillRect(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
+        drawBox(color, dimensions, this.context);
     };
 
     this.drawLine = function(pointA, pointB) {
-        context.moveTo(pointA);
-        context.lineTo(pointB);
-        context.stroke();
+        drawLine(pointA, pointB, this.context);
     };
 
     this.drawText = function(text, dimensions) {
         var x = dimensions[0] + dimensions[2] / 2 - dimensions[2] / 4;
         var y = dimensions[1] + dimensions[3] / 2 + dimensions[3] / 5;
-        context.font = '20pt Calibri'
-        context.fillStyle = "#d9d9d9";
-        context.fillText(text, x, y);
+        this.context.font = '20pt Calibri'
+        this.context.fillStyle = "#d9d9d9";
+        this.context.fillText(text, x, y);
     };
 
     this.drawImage = function(image, dimensions) {
         var img = document.getElementById(image);
-        context.drawImage(img, location);
+        this.context.drawImage(img, location);
     };
 
 };
@@ -141,4 +154,29 @@ var getDimensions = function(piece) {
     dim[3] = (pieceSize); //H
 
     return dim;
+};
+
+var drawLine = function(pointA, pointB, context, color) {
+
+    if (color) {
+        context.strokeStyle = color;
+    } else {
+        context.strokeStyle = "#ffffff";
+    }
+
+    context.beginPath();
+    context.moveTo(pointA.x, pointA.y);
+    context.lineTo(pointB.x, pointB.y);
+    context.stroke();
+};
+
+var drawBox = function(color, dimensions, context) {
+    if (dimensions === undefined) {
+        throw "No Dimensions in canvasHandler.drawBox()";
+    }
+    if (color === undefined) {
+        color = "#5f5f5f";
+    }
+    context.fillStyle = color;
+    context.fillRect(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
 };

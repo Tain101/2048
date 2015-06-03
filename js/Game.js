@@ -4,9 +4,9 @@
  */
 var cursors;
 var allowKeys = true;
-var populationSize = 100;
+var populationSize = 2;
 var mutationRate = 0.05;
-var winners = 15;
+var winners = 1;
 var hasSlid = false;
 
 var bot;
@@ -33,6 +33,7 @@ var Game = function() {
             if (currentPopulation >= populationSize) {
                 console.log("starting next generation!");
                 savedWinnerList = getParents(winnerList);
+                gridHandler.updateGen(currentGeneration, generationScore);
                 currentPopulation = 0;
                 generationScore = 0;
                 winnerList = [];
