@@ -4,9 +4,9 @@
  */
 var cursors;
 var allowKeys = true;
-var populationSize = 2;
+var populationSize = 100;
 var mutationRate = 0.05;
-var winners = 1;
+var winners = 20;
 var hasSlid = false;
 
 var bot;
@@ -183,4 +183,12 @@ var getParents = function(list) {
         parents[index] = mutationBot;
         index++;
     }
+};
+
+var getRandomValue = function(min, max) {
+    max = max || 1;
+    min = min || 0;
+    seed = (seed * 9301 + 49297) % 233280;
+    var rnd = seed / 233280;
+    return min + rnd * (max - min);
 };

@@ -53,8 +53,8 @@ var Board = function() {
 
     this.addRandomPiece = function() {
         var emptySquare = this.getEmptySquare();
-        var randomValue = Math.random();
-        if (Math.random() > 0.8) {
+        var randomValue = getRandomValue(0, 1); //Math.random();
+        if (getRandomValue(0, 1) > 0.8) {
             randomValue = 4;
         } else {
             randomValue = 2;
@@ -90,7 +90,7 @@ var Board = function() {
         }
 
         //pick random index
-        var randomIndex = Math.random() * (index + 1);
+        var randomIndex = getRandomValue(0, 1) * (index + 1);
         randomIndex = Math.floor(randomIndex);
         var counter = 0;
         while (emptyList[randomIndex] === undefined) {

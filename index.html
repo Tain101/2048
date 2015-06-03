@@ -5,8 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>2048</title>
         <script type="text/javascript">
-        var canvasSize = 300;
-        var margin = canvasSize / 160 * 3;
+            var canvasSize = 300;
+            var margin = canvasSize / 160 * 3;
         </script>
         <link rel="stylesheet" type="text/css" href="./style.css">
         <script src="js/CanvasHandler.js"></script>
@@ -74,6 +74,7 @@
             var totalPopulation = 0;
             var currentGeneration = 0;
             var now = 0, then = 0, tpf = 0;
+            var seed = 100;//Date.now();
 
             function preload() {
                 game.preload();

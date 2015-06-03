@@ -14,7 +14,7 @@
 var Bot = function(parents) {
     this.id = 0;
     this.score = 0;
-    this.seed = undefined;
+    // this.seed = undefined;
     this.moveList = [0];
     this.random = false;
     this.currentMove = 0;
@@ -47,7 +47,8 @@ var Bot = function(parents) {
             //generate moveList for child.
             for (i = moveListSize - 1; i >= 0; i--) {
 
-                var randomIndex = Math.round(Math.random() * 100);
+                var randomIndex = Math.round(getRandomValue(0, 1) * 100);
+                // var randomIndex = Math.round(Math.random() * 100);
                 var start = randomIndex;
 
                 do {
@@ -68,7 +69,8 @@ var Bot = function(parents) {
     this.getMove = function(index) {
         var move;
         if (this.random) {
-            move = Math.round(Math.random() * 100) % 4;
+            move = Math.round(randomValue(0, 1) * 100) % 4;
+            // move = Math.round(Math.random() * 100) % 4;
         } else {
             move = this.moveList[index];
         }
@@ -103,13 +105,14 @@ var Bot = function(parents) {
     };
 
     this.moveRandom = function() {
-        return Math.round(Math.random() * 100) % 4;
+        return Math.round(getRandomValue(0, 1) * 100) % 4;
+        // return Math.round(Math.random() * 100) % 4;
     };
 
     this.clean = function() {
         this.id = 0;
         // this.score = 0;
-        this.seed = undefined;
+        // this.seed = undefined;
         this.random = false;
         this.currentMove = 0;
         this.parents = null;
