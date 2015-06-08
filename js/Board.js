@@ -11,6 +11,7 @@ var boardSize = {
     height: 4
 };
 var pieceSize = canvasSize / 4 * 0.95;
+var count = 0;
 
 
 var Board = function() {
@@ -60,6 +61,14 @@ var Board = function() {
             randomValue = 2;
         }
 
+        // remove randomness
+        if (count < 4) {
+            randomValue = 2;
+        } else {
+            randomValue = 4;
+            count = 0;
+        }
+
         if (emptySquare !== false) {
             emptySquare.setValue(randomValue);
         } else {
@@ -92,6 +101,8 @@ var Board = function() {
         //pick random index
         var randomIndex = getRandomValue(0, 1) * (index + 1);
         randomIndex = Math.floor(randomIndex);
+        //remove Randomness
+        randomIndex = 0;
         var counter = 0;
         while (emptyList[randomIndex] === undefined) {
             if (counter >= index) {

@@ -5,6 +5,15 @@
     Generations go in a sin pattern.
     Either need to change or remove seeding.
 -->
+<!--
+    In order for the score to be meaningful, the cases need to be against a consistent game.
+    In order for the game to be consistent, the added 2s and 4s need to be consistent.
+    To do that,
+        We could give a priority list to each sqare, and always spawn in the same place if possible.
+            We may be able to change the list based on a given turn,
+            but for now we should make it as simple as possible.
+        Alternatively, we could give a seed for the square generation, and reset the seed each game.
+ -->
 <!DOCTYPE html>
 <html>
 
@@ -58,9 +67,9 @@
             var fps = 1000/parseInt(document.getElementById("FPS").value, 10);
             var genetic = true;
             var restart = true;
-            var populationSize = 2;
+            var populationSize = 100;
             var mutationRate = 0.05;
-            var winners = 1;
+            var winners = 10;
 
             //objects
             var game = new Game();
@@ -83,7 +92,7 @@
             var totalPopulation = 0;
             var currentGeneration = 0;
             var now = 0, then = 0, tpf = 0;
-            var seed = 100;//Date.now();
+            var seed = Date.now(); //enable randomness for moves, not for generation.
 
             function preload() {
                 game.preload();
