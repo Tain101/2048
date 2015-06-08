@@ -70,6 +70,7 @@ var gridHandler = function(canvasHandler) {
         minScore = 999999;
         maxGen = 0;
         for (var i = 0; i < this.points.length; i++) {
+            console.log("setScale: " + this.points[i]);
             if (this.points[i] > maxScore) {
                 maxScore = this.points[i];
             }
@@ -158,6 +159,7 @@ var gridHandler = function(canvasHandler) {
     };
 
     this.placeGridNumbers = function() {
+        console.log("max: " + maxScore + ", min: " + minScore);
         if (minScore != 999999 && maxScore !== 0 && minScore != maxScore) {
             var minScoreDimensions = [0, 280, 10, 10];
             drawText(minScore, minScoreDimensions, context, 10);

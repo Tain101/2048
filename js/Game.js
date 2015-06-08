@@ -29,9 +29,10 @@ var Game = function() {
 
             //
             if (currentPopulation >= populationSize) {
-                console.log("starting next generation!");
+                console.log("__________________________starting next generation!");
                 savedWinnerList = getParents(winnerList);
-                gridHandler.updateGen(currentGeneration, generationScore / generationAverage);
+                console.log("+++++++++++++++++++++++++++" + generationScore + "/" + currentPopulation);
+                gridHandler.updateGen(currentGeneration, generationScore / currentPopulation);
                 currentPopulation = 0;
                 generationScore = 0;
                 winnerList = [];
